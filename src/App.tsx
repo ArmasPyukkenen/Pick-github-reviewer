@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import SettingsBar from './components/SettingsBar/SettingsBar';
 import './App.css';
+import { useTypedSelector } from './hooks/useTypedSelector';
 
 function App() {
+  const {currentUser, repoName} = useTypedSelector(state => state.settings);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SettingsBar/>
+      <button>Search reviewer</button>
+      <main>
+        <p>Repo name:</p>
+        <p>{repoName}</p>
+        <p>Current User:</p>
+        <div className="user-card">{currentUser || 'current user data'}</div>
+        <p>Reviewer Candidates:</p>
+        <ul>
+          <li><div className="user-card">Candidate data</div></li>
+          <li><div className="user-card">Candidate data</div></li>
+          <li><div className="user-card">Candidate data</div></li>
+        </ul>
+        <p>Chosen Reviewer:</p>
+        <div className="user-card">Reviewer Data</div>
+      </main>
     </div>
   );
 }

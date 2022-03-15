@@ -1,24 +1,27 @@
+import { VerifiableInputData, VerifiableInputAction } from "./verifiable-input-types";
+
 export enum SettingsActionTypes {
-  UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER",
-  UPDATE_REPO_NAME = "UPDATE_REPO_NAME",
-  UPDATE_BLACKLIST_CANDIDATE = "UPDATE_BLACKLIST_CANDIDATE",
   ADD_BLACKLIST_USER = "ADD_BLACKLIST_USER",
   REMOVE_BLACKLIST_USER = "REMOVE_BLACKLIST_USER",
+  REDUCE_CURRENT_USER = "REDUCE_CURRENT_USER",
+  REDUCE_REPO_NAME = "REDUCE_REPO_NAME",
+  REDUCE_BLACKLIST_CANDIDATE = "REDUCE_BLACKLIST_CANDIDATE",
+  VALIDATE_SETTINGS = "VALIDATE_SETTINGS"
 }
 
-interface updateCurrentUserAction {
-  type: SettingsActionTypes.UPDATE_CURRENT_USER;
-  userName: string;
+interface reduceCurrentUserAction {
+  type: SettingsActionTypes.REDUCE_CURRENT_USER;
+  subAction: VerifiableInputAction;
 }
 
-interface updateRepoNameAction {
-  type: SettingsActionTypes.UPDATE_REPO_NAME;
-  repoName: string
+interface reduceRepoNameAction {
+  type: SettingsActionTypes.REDUCE_REPO_NAME;
+  subAction: VerifiableInputAction;
 }
 
-interface updateBlacklistCandidateAction {
-  type: SettingsActionTypes.UPDATE_BLACKLIST_CANDIDATE;
-  blacklistCandidateName: string
+interface reduceBlacklistCandidateAction {
+  type: SettingsActionTypes.REDUCE_BLACKLIST_CANDIDATE;
+  subAction: VerifiableInputAction;
 }
 
 interface addBlacklistUserAction {
@@ -30,14 +33,18 @@ interface removeBlacklistUserAction {
   blacklistName: string
 }
 
-export type SettingsAction = updateCurrentUserAction | updateRepoNameAction | updateBlacklistCandidateAction | addBlacklistUserAction | removeBlacklistUserAction;
-
-export interface SettingsState {
-  currentUser: string;
-  repoName: string;
-  blacklist: {
-    candidate: string;
-    list: string[];
-  }
+interface validateSettingsAction {
+  type: SettingsActionTypes.VALIDATE_SETTINGS;
 }
 
+export type SettingsAction = reduceCurrentUserAction | reduceRepoNameAction | reduceBlacklistCandidateAction | addBlacklistUserAction | removeBlacklistUserAction | validateSettingsAction;
+
+export interface SettingsState {
+  currentUser: VerifiableInputData;
+  repoName: VerifiableInputData;
+  blacklist: {
+    candidate: VerifiableInputData;
+    list: string[];
+  };
+  ok: boolean;
+}

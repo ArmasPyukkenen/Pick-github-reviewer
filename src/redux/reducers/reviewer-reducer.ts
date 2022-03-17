@@ -5,7 +5,8 @@ const initialState : reviewerState = {
   currentUser: '',
   repoName: '',
   reviewerCandidates: [],
-  chosenReviewer: ''
+  chosenReviewer: '',
+  otherCandidatesCount: null
 }
 
 export const reviewerReducer = (state = initialState, action : reviewerAction): reviewerState => {
@@ -16,7 +17,8 @@ export const reviewerReducer = (state = initialState, action : reviewerAction): 
         currentUser: action.currentUser, 
         repoName: action.repoName,
         reviewerCandidates: action.reviewerCandidates,
-        chosenReviewer: action.chosenReviewer
+        chosenReviewer: action.chosenReviewer,
+        otherCandidatesCount: action.otherCandidatesCount
       };
     case reviewerActionTypes.SET_STATUS:
       return {...state, status: action.status}

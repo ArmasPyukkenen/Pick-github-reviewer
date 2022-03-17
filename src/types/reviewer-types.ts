@@ -6,6 +6,7 @@ export type reviewerState = {
   repoName: string;
   reviewerCandidates: string[];
   chosenReviewer: string;
+  otherCandidatesCount: number | null;
 }
 
 export enum reviewerActionTypes  {
@@ -18,7 +19,8 @@ interface PassDataAction {
   currentUser: string,
   repoName: string,
   reviewerCandidates: string[],
-  chosenReviewer: string
+  chosenReviewer: string,
+  otherCandidatesCount: number | null;
 }
 
 interface SetStatusAction {

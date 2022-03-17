@@ -6,13 +6,11 @@ import { useActions } from './hooks/useActions';
 
 function App() {
   const settings = useTypedSelector(state=> state.settings);
-  const {status, currentUser, repoName, reviewerCandidates, chosenReviewer} = useTypedSelector(state => state.reviewer);
+  const {status, currentUser, repoName, reviewerCandidates, chosenReviewer, otherCandidatesCount} = useTypedSelector(state => state.reviewer);
   const {pickReviewer, setSettings} = useActions();
   //Load settings from localStorage
   useEffect(() => {
     const serializedSettings = window.localStorage.getItem('settings');
-    console.log('load settings');
-    console.log(serializedSettings);
     if (serializedSettings) {
       setSettings(JSON.parse(serializedSettings));
     }
@@ -23,8 +21,6 @@ function App() {
     const noUpdate = [settings.currentUser.status, settings.repoName.status, settings.blacklist.candidate.status].some(isTempStatus);
     if (noUpdate) return;
     const serializedSettings = JSON.stringify(settings);
-    console.log('save settings');
-    console.log(serializedSettings);
     window.localStorage.setItem('settings', serializedSettings)
   }, [settings])
   return (
@@ -72,7 +68,10 @@ function App() {
                 {reviewerCandidates.map((candidate: string) => (
                   <li key={candidate}><div>{candidate}</div></li>
                 ))}
-              </ul>              
+              </ul>
+              {
+                otherCandidatesCount && <p>And approximately {otherCandidatesCount} more...</p>
+              }     
             </div>
             <div style={{border: "1px solid grey"}}>
               <p>Chosen Reviewer:</p>

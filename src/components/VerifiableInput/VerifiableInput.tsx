@@ -30,18 +30,20 @@ const VerifiableInput: React.FC<VerifiableInputProps> = ({data, updateValue, fet
     }}>
       <label htmlFor={inputId}>{label}</label>
       <input type="text" id={inputId} value={data.value} onChange={(e) => updateValue(e.target.value)} />
-      {
-        data.status === 'typing' && <p>...</p>
-      }
-      {
-        data.status === 'failed' && <p style={{color: "red"}}>{data.error}</p>
-      }
-      {
-        data.status === 'loading' && <p>checking the value</p>
-      }
-      {
-        data.status === 'verified' && <p style={{color: "green"}}>Entered value is valid</p>
-      }
+      <div style={{fontSize: "0.8rem"}}>
+        {
+          data.status === 'typing' && <p>...</p>
+        }
+        {
+          data.status === 'failed' && <p style={{color: "red"}}>{data.error}</p>
+        }
+        {
+          data.status === 'loading' && <p>checking the value</p>
+        }
+        {
+          data.status === 'verified' && <p style={{color: "green"}}>Entered value is valid</p>
+        }
+      </div>
     </div>
   )
 }

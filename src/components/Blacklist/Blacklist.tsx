@@ -23,7 +23,7 @@ const Blacklist: React.FC = () => {
       :
       <ul>
         {list.map(blacklistedUser => (
-          <li>{blacklistedUser} <button onClick={() => removeBlacklistUser(blacklistedUser)}>Delete from list</button></li>
+          <li key={blacklistedUser}>{blacklistedUser} <button onClick={() => removeBlacklistUser(blacklistedUser)}>Delete from list</button></li>
         ))}
       </ul>
       }

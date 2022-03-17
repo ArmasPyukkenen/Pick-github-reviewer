@@ -21,6 +21,7 @@ const initialState: SettingsState = {
     },
     list: []
   },
+  contributorsPagesCount: null,
   ok: false
 }
 
@@ -30,6 +31,8 @@ const validateUpdatedState = (updatedState: SettingsState): SettingsState => {
 
 export const settingsReducer = (state = initialState, action: SettingsAction): SettingsState => {
   switch (action.type) {
+    case SettingsActionTypes.SET_SETTINGS:
+      return action.settings;
     case SettingsActionTypes.REDUCE_CURRENT_USER:
       return validateUpdatedState({...state, currentUser: verifiableInputReducer(state.currentUser, action.subAction)});
     case SettingsActionTypes.REDUCE_REPO_NAME:
@@ -40,9 +43,12 @@ export const settingsReducer = (state = initialState, action: SettingsAction): S
         candidate: verifiableInputReducer(state.blacklist.candidate, action.subAction)
       }};
     case SettingsActionTypes.ADD_BLACKLIST_USER:
+      const newList = state.blacklist.list.includes(state.blacklist.candidate.value)
+        ? state.blacklist.list
+        : [...state.blacklist.list, state.blacklist.candidate.value];
       return {...state, blacklist: {
         candidate: verifiableInputReducer(state.blacklist.candidate, {type:verifiableInputActionTypes.CLEAR_INPUT}), 
-        list: [...state.blacklist.list, state.blacklist.candidate.value]
+        list: newList
       }};
     case SettingsActionTypes.REMOVE_BLACKLIST_USER:
       return {...state, blacklist: {
@@ -53,6 +59,8 @@ export const settingsReducer = (state = initialState, action: SettingsAction): S
       const areSettingsValid = state.currentUser.status === 'verified' && state.repoName.status === 'verified';
       const doesOkPropertyMatch = state.ok === areSettingsValid;
       return doesOkPropertyMatch ? state : {...state, ok: areSettingsValid};
+    case SettingsActionTypes.SET_CONTRIBUTORS_PAGE_COUNT:
+      return {...state, contributorsPagesCount: action.count};
     default: 
       return state;
   }
